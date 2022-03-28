@@ -5,9 +5,14 @@ const {
   getUserById,
   createUser,
   updateUser,
-  deleteUser
+  deleteUser,
+  addFriend,
+  removeFriend
 } = require('../../controllers/user-controller');
 
+const {
+    removeThought
+} = require('../../controllers/thought-controller');
 
 
 // Set up GET all and POST at /api/users
@@ -27,7 +32,6 @@ router
 router
 .route('/:userId/:thoughtId')
 .delete(removeThought);
-
 
 // /api/users/:userId/friends/:friendId
 router
