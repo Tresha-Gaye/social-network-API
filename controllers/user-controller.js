@@ -47,28 +47,28 @@ const userController = {
 
     // update user by id
     updateUser({ params, body }, res) {
-    User.findOneAndUpdate({ _id: params.id }, body, { new: true, runValidators: true }) 
-        .then((dbUser) => {
-            if (!dbUser) {
-            res.status(404).json({ message: "No user found with this id!" });
-            return;
-            }
-            res.json(dbUser);
-        })
-        .catch((err) => res.status(400).json(err));
+        User.findOneAndUpdate({ _id: params.id }, body, { new: true, runValidators: true }) 
+            .then((dbUser) => {
+                if (!dbUser) {
+                res.status(404).json({ message: "No user found with this id!" });
+                return;
+                }
+                res.json(dbUser);
+            })
+            .catch((err) => res.status(400).json(err));
     },
 
     // delete user
     deleteUser({ params }, res) {
-    User.findOneAndDelete({ _id: params.id }) 
-        .then((dbUser) => {
-            if (!dbUser) {
-            res.status(404).json({ message: "No user found with this id!" });
-            return;
-            }
-            res.json(dbUser);
-        })
-        .catch((err) => res.status(400).json(err));
+        User.findOneAndDelete({ _id: params.id }) 
+            .then((dbUser) => {
+                if (!dbUser) {
+                res.status(404).json({ message: "No user found with this id!" });
+                return;
+                }
+                res.json(dbUser);
+            })
+            .catch((err) => res.status(400).json(err));
     },
 
     // add new friend to user's friend list
@@ -88,7 +88,7 @@ const userController = {
           .catch(err => res.json(err));
     },
 
-    // remove friend
+    // remove friend from user's friend list
     removeFriend({ params }, res) {
     User.findOneAndUpdate(
       { _id: params.userId },
@@ -97,7 +97,7 @@ const userController = {
     )
       .then(dbUser => res.json(dbUser))
       .catch(err => res.json(err));
-  },
+    },
 
 };
 

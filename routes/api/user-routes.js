@@ -29,7 +29,6 @@ router
 .delete(removeThought);
 
 
-
 // /api/users/:userId/friends/:friendId
 router
 .route('/:userId/friends/:friendId')
