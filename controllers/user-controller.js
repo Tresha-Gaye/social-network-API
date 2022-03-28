@@ -19,12 +19,12 @@ const userController = {
         // we destructure the `params` out of the Express.js `req` object since that's all we need
         User.findOne({ _id: params.id })
         .populate({
-            path: "thoughts, friends",
+            path: "thoughts friends",
             select: "-__v",
         })
         .select("-__v")
         .then((dbUser) => {
-            // if no pizza id found, send 404
+            // if no user id found, send 404
             if (!dbUser) {
             res.status(404).json({ message: "No user found with this id! " });
             return;
@@ -56,7 +56,7 @@ const userController = {
             res.json(dbUser);
         })
         .catch((err) => res.status(400).json(err));
-  },
+    },
 
     // delete user
     deleteUser({ params }, res) {
@@ -69,7 +69,36 @@ const userController = {
             res.json(dbUser);
         })
         .catch((err) => res.status(400).json(err));
+    },
+
+    // add new friend to user's friend list
+    addFriend({ params, body }, res) {
+        User.findOneAndUpdate(
+          { _id: params.userId },
+          { $push: { friends: body } },
+          { new: true, runValidators: true }
+        )
+          .then(dbUser => {
+            if (!dbUser) {
+              res.status(404).json({ message: 'No user found with this id!' });
+              return;
+            }
+            res.json(dbUser);
+          })
+          .catch(err => res.json(err));
+    },
+
+    // remove friend
+    removeFriend({ params }, res) {
+    User.findOneAndUpdate(
+      { _id: params.userId },
+      { $pull: { friends: { friendId: params.friendId } } },
+      { new: true }
+    )
+      .then(dbUser => res.json(dbUser))
+      .catch(err => res.json(err));
   },
+
 };
 
 module.exports = userController;

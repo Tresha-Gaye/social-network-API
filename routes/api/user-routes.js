@@ -24,8 +24,18 @@ router
   .delete(deleteUser);
 
 // remove a user's associated thoughts when deleted
-router.route('/:id/thoughtId')
+router
+.route('/:userId/:thoughtId')
 .delete(removeThought);
+
+
+
+// /api/users/:userId/friends/:friendId
+router
+.route('/:userId/friends/:friendId')
+.post(addFriend)
+.delete(removeFriend);
+
 
 module.exports = router;
 
