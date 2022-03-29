@@ -39,7 +39,7 @@ const userController = {
 
     // create new user - adds a user to the database
     createUser({ body }, res) {
-        // we destructure the `body` out of the Express.js `req` object since that's all we need
+        console.log(body);
         User.create(body) 
         .then((dbUser) => res.json(dbUser))
         .catch((err) => res.status(400).json(err));
