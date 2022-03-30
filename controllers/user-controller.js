@@ -42,7 +42,10 @@ const userController = {
         console.log(body);
         User.create(body) 
         .then((dbUser) => res.json(dbUser))
-        .catch((err) => res.status(400).json(err));
+        .catch((err) => {
+        console.log(err, 'not creating user');
+        res.status(400).json(err)
+        });
     },
 
     // update user by id
@@ -78,6 +81,10 @@ const userController = {
           { $push: { friends: body } },
           { new: true, runValidators: true }
         )
+          .populate({
+            path: "friends",
+            select: "-__v"
+          })
           .then(dbUser => {
             if (!dbUser) {
               res.status(404).json({ message: 'No user found with this id!' });
