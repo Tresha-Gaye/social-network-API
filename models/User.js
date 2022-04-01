@@ -1,6 +1,25 @@
 const { Schema, model } = require('mongoose');
 const dateFormat = require('../utils/dateFormat');
 
+const FriendSchema = new Schema ({
+    friendsId: {
+        type: Schema.Types.ObjectId,
+        ref: 'User',
+        default: () => new Types.ObjectId(),
+        required: true
+    },
+    createdAt: {
+            type: Date,
+            default: Date.now,
+            get: createdAtVal => dateFormat(createdAtVal)
+    }  
+    },
+        {
+        toJSON: {
+          getters: true
+          }
+});
+
 const UserSchema = new Schema({
     username: {
         type: String,
@@ -25,12 +44,7 @@ const UserSchema = new Schema({
             ref: 'Thought'
             }
         ],
-    friends: [
-            {
-            type: Schema.Types.ObjectId,
-            ref: 'User'
-            }
-        ],
+    friends: [ FriendSchema ],
     },
     {
     toJSON: {
@@ -41,9 +55,9 @@ const UserSchema = new Schema({
     }
 );
 
-// get total count of comments and replies on retrieval
+// get total count of friends on retrieval
 UserSchema.virtual('friendCount').get(function() {
-    return this.friends.reduce((total, friends) => total + users.friends.length + 1, 0);
+    return this.friends.length;
   });
 
 // create the User model using the UserSchema
