@@ -44,11 +44,11 @@ The application successfully connects to the database and syncs the Mongoose mod
 
 Below are images from Insomnia, displaying data:  
 <br />
-![Add-friend](./public/images/add-friend.jpg)  
+![Add-friend](./public/assets/images/add-friend.jpg)  
 <br />
-![Add-thought](./public/images/add-thought.jpg)  
+![Add-thought](./public/assets/images/add-thought.jpg)  
 <br />
-![All-users](./public/images/get-users.jpg) 
+![All-users](./public/assets/images/get-users.jpg) 
 
 ## Contributing
 
