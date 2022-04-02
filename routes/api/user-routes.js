@@ -10,10 +10,6 @@ const {
   removeFriend
 } = require('../../controllers/user-controller');
 
-const {
-    removeThought
-} = require('../../controllers/thought-controller');
-
 
 // Set up GET all and POST at /api/users
 router
@@ -28,16 +24,12 @@ router
   .put(updateUser)
   .delete(deleteUser);
 
-// remove a user's associated thoughts when deleted
-router
-.route('/:userId/:thoughtId')
-.delete(removeThought);
-
 // /api/users/:userId/friends/:friendId
 router
-.route('/:userId/friends/:friendId')
+.route('/:id/friends/:friendId')
 .post(addFriend)
 .delete(removeFriend);
+
 
 
 module.exports = router;
