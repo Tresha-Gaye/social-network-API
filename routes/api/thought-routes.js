@@ -19,25 +19,21 @@ router
   .route('/:userId')
   .post(addThought);
 
-// remove a user's associated thoughts when deleted
-router
-  .route('/:userId/:thoughtId')
-  .delete(removeThought);
-
 // Set up GET one, PUT, and DELETE at /api/thoughts/:id
 router
   .route('/:thoughtId')
   .get(getThoughtById)
-  .put(updateThought);
+  .put(updateThought)
+  .delete(removeThought);
 
 // add reactions to existing thoughts /api/thoughts/:thoughtId/reactions
 router
   .route('/:thoughtId/reactions')
-  .post(addReaction)
+  .post(addReaction);
 
 // delete reactions /api/thoughts/:thoughtId/reactions
 router
-  .route('/:thoughtId/reactions/:reactionsId')
+  .route('/:thoughtId/reactions/:reactionId')
   .delete(removeReaction);
 
 module.exports = router;

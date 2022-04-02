@@ -18,10 +18,6 @@ const thoughtController = {
     getThoughtById({ params }, res) {
         // we destructure the `params` out of the Express.js `req` object since that's all we need
         Thought.findOne({ _id: params.thoughtId })
-        .populate({
-            path: "users",
-            select: "-__v",
-        })
         .select("-__v")
         .then((dbThought) => {
             // if no thoughts id found, send 404
@@ -111,7 +107,7 @@ const thoughtController = {
           return res.status(404).json({ message: 'No thought with this id!' });
         }
         return User.findOneAndUpdate(
-          { _id: params.userId },
+          { thoughts: params.thoughtId },
           { $pull: { thoughts: params.thoughtId } },   
           { new: true }    
         );

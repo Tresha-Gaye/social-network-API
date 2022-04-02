@@ -1,5 +1,5 @@
 const res = require('express/lib/response');
-const { User } = require('../models');
+const { User, Thought } = require('../models');
 
 
 const userController = {
@@ -70,7 +70,14 @@ const userController = {
                 res.status(404).json({ message: "No user found with this id!" });
                 return;
                 }
-                res.json(dbUser);
+                console.log("deleted the user successfully", dbUser);
+                return Thought.deleteMany({ _id: dbUser.thoughts })
+                
+                // res.json(dbUser);
+            })
+            .then((deletedThoughts)=> {
+              res.json({ message: "deleted user and it's associated thoughts" })
+                console.log(deletedThoughts);
             })
             .catch((err) => res.status(400).json(err));
     },
@@ -104,7 +111,7 @@ const userController = {
     removeFriend({ params }, res) {
     User.findOneAndUpdate(
       { _id: params.id },
-      { $pull: { friends: { friendId: params.friendId } } },
+      { $pull: { friends: params.friendId } },
       { new: true,  runValidators: true }
     )
         .then((dbUser) => {
@@ -112,7 +119,7 @@ const userController = {
               res.status(404).json({ message: "No friend found with this ID."});
               return;
             }
-
+          console.log(dbUser)
           res.json(dbUser);
         })
         .catch(err => res.json(err));
